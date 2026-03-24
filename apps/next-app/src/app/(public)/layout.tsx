@@ -31,7 +31,7 @@ export default function RootLayout({
         </Link>
       </div>
 
-      <article className="prose prose-slate lg:prose-lg max-w-none">
+      <article className="prose prose-slate lg:prose-lg max-w-none dark:prose-invert">
         {children}
       </article>
     </div>

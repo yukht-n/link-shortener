@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'LinkShortener';
+const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'Link Shortener';
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t py-6 text-sm text-slate-500">
+    <footer className="mt-auto border-t py-6 text-sm text-slate-500 dark:text-slate-100">
       <div className="container mx-auto flex flex-col items-center gap-4">
         <p>
           © {new Date().getFullYear()} {PROJECT_NAME} — Privacy First

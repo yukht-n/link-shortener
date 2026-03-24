@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@project/shared": "*",
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^7.4.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -19,6 +21,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prisma": "^7.5.0",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4"
   }

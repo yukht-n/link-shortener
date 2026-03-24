@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///home/sfeeks/Projects/link-shortener/project/next-app/src/app/not-found.tsx"],"sourcesContent":["import type { Metadata } from 'next';\nimport Link from 'next/link';\n\n// https://nextjs.org/docs/app/api-reference/file-conventions/not-found\n\nconst PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'LinkShortener';\n\nexport const metadata: Metadata = {\n  title: `${PROJECT_NAME} - 404 - Not found 🤷`,\n};\n\nexport default function NotFound() {\n  return (\n    <div className=\"flex flex-col items-center p-24\">\n      <h1 className=\"text-4xl font-bold mb-8\">\n        Unfortunately, nothing was found for this URL. 🤷\n      </h1>\n\n      <p>Try the following link:</p>\n\n      <Link href=\"/\">Homepage</Link>\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;;;AACA;;;AAEA,uEAAuE;AAEvE,MAAM,eAAe,sDAAwC;AAEtD,MAAM,WAAqB;IAChC,OAAO,GAAG,aAAa,qBAAqB,CAAC;AAC/C;AAEe,SAAS;IACtB,qBACE,wQAAC;QAAI,WAAU;;0BACb,wQAAC;gBAAG,WAAU;0BAA0B;;;;;;0BAIxC,wQAAC;0BAAE;;;;;;0BAEH,wQAAC,oNAAI;gBAAC,MAAK;0BAAI;;;;;;;;;;;;AAGrB"}}]
-}

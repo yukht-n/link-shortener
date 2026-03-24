@@ -1,10 +1,9 @@
 'use server';
 
+import { serverFindShortCode, serverSaveLink } from '@project/database/db';
 import { Prisma } from '@project/database/generated/prisma/client';
 import type { FormState } from '@project/shared/index';
 import { CreateFormUrlSchema, generateSlug } from '@project/shared/index';
-
-import { serverFindShortCode, serverSaveLink } from '@project/database/db';
 
 import z from 'zod';
 
@@ -12,7 +11,7 @@ export async function createShortLink(
   prevState: FormState,
   formData: FormData,
 ) {
-  const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const urlFormData = {
     url: formData.get('url'),
     antiSpam: formData.get('no-name') || '',

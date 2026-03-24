@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///home/sfeeks/Projects/link-shortener/apps/next-app/src/app/%5Bslug%5D/page.tsx"],"sourcesContent":["import { serverFindOriginalLink } from '@lib/db';\nimport { Prisma } from '@lib/generated/prisma/client';\nimport { notFound, redirect } from 'next/navigation';\n\ninterface PageProps {\n  params: Promise<{ slug: string }>;\n}\ntype Props = PageProps;\n\n// Redirect Page\nexport default async function RedirectPage({ params }: Props) {\n  const { slug } = await params;\n\n  try {\n    const originalLink = await serverFindOriginalLink(slug);\n    if (!originalLink) notFound();\n    redirect(originalLink);\n  } catch (e) {\n    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2025')\n      notFound();\n    throw e;\n  }\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEA;AAAA;;;;AAQe,eAAe,aAAa,EAAE,MAAM,EAAS;IAC1D,MAAM,EAAE,IAAI,EAAE,GAAG,MAAM;IAEvB,IAAI;QACF,MAAM,eAAe,MAAM,uBAAuB;QAClD,IAAI,CAAC,cAAc,IAAA,iMAAQ;QAC3B,IAAA,iMAAQ,EAAC;IACX,EAAE,OAAO,GAAG;QACV,IAAI,aAAa,OAAO,6BAA6B,IAAI,EAAE,IAAI,KAAK,SAClE,IAAA,iMAAQ;QACV,MAAM;IACR;AACF"}}]
-}

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 
-const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'LinkShortener';
+const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'Link Shortener';
 
 export const metadata: Metadata = {
   title: `${PROJECT_NAME} - Impressum`,
 };
 
 export default function LegalNotice() {
-  const name = process.env.NEXT_PUBLIC_OWNER_NAME || 'Project Owner';
-  const email = process.env.NEXT_PUBLIC_OWNER_EMAIL || 'contact@example.com';
+  const name = process.env.OWNER_NAME || 'Project Owner';
+  const email = process.env.OWNER_EMAIL || 'contact@example.com';
   return (
     <>
       <h1>Impressum</h1>

@@ -1,7 +1,7 @@
 import { Helmet } from '@dr.pogodin/react-helmet';
+import { CreateFormUrlSchema, type FormState } from '@project/shared';
 import { useActionState } from 'react';
 import z from 'zod';
-import { CreateFormUrlSchema, type FormState } from '@project/shared';
 import { CONFIG } from './config';
 
 function App() {
@@ -65,7 +65,7 @@ function App() {
             name="url"
             placeholder="Enter link..."
             aria-label="URL to shorten"
-            className={`p-2 boreder rounded text-black w-80 ${state.errors?.url ? 'border-red-500' : 'border-gray-300'}`}
+            className={`p-2 border rounded text-black dark:text-white w-80 ${state.errors?.url ? 'border-red-500' : 'border-gray-300'}`}
             required
           />
           {state.errors?.url && (

@@ -10,7 +10,7 @@ export default function Home() {
     success: false,
     message: '',
   });
-  const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
   return (
     <main className="flex flex-col items-center p-12">
@@ -23,7 +23,7 @@ export default function Home() {
             name="url"
             placeholder="Enter link..."
             aria-label="URL to shorten"
-            className={`p-2 boreder rounded text-black w-80 ${state.errors?.url ? 'border-red-500' : 'border-gray-300'}`}
+            className={`p-2 border rounded text-black dark:text-white w-80 ${state.errors?.url ? 'border-red-500' : 'border-gray-300'}`}
             required
           />
           {state.errors?.url && (

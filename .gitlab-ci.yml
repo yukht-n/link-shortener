@@ -50,60 +50,14 @@ test_all:
     #  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == "main"
 
-# --- BUILD ---
-
-# Template
-.vps_build:
-  stage: build
-  tags:
-    - vps-deploy
-  script:
-    - docker build -t $IMAGE_NAME:latest -f $DOCKERFILE_PATH .
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-
-# Express Build
-build_api:
-  extends: .vps_build
-  variables:
-    IMAGE_NAME: $API_IMAGE
-    DOCKERFILE_PATH: apps/express-api/Dockerfile
-  # rules:
-  #   - changes:
-  #       - apps/express-api/**/*
-  #       - packages/**/*
-
-# React Build
-build_react:
-  stage: build
-  tags:
-    - vps-deploy
-  script:
-    # geben environments
-    - docker build --build-arg VITE_API_URL=$VITE_API_URL --build-arg VITE_PUBLIC_PROJECT_NAME=$VITE_PUBLIC_PROJECT_NAME --build-arg VITE_PUBLIC_OWNER_NAME=$VITE_PUBLIC_OWNER_NAME --build-arg VITE_PUBLIC_OWNER_EMAIL=$VITE_PUBLIC_OWNER_EMAIL   -t $SPA_IMAGE:latest -f apps/react-spa/Dockerfile .
-  # rules:
-  #   - changes:
-  #       - apps/react-spa/**/*
-  #       - packages/shared/**/*
-
-# Next-app Build
-build_next:
-  extends: .vps_build
-  variables:
-    IMAGE_NAME: $WEB_IMAGE
-    DOCKERFILE_PATH: apps/next-app/Dockerfile
-  # rules:
-  #   - changes:
-  #       - apps/next-app/**/*
-  #       - packages/**/*
-
 # --- STAGE: DEPLOY ---
-deploy_local:
+trigger_deploy:
   stage: deploy
-  tags:
-    - vps-deploy
   script:
-    - cd /etc/dokploy/compose/linkshortenermonorepo-monorepo-zaru80/code
-    - docker compose up -d --build --force-recreate
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - |
+      curl -X POST "${DOKPLOY_WEBHOOK_URL}" \
+      -H "x-gitlab-event: Push Hook" \
+      -H "Content-Type: application/json" \
+      -d '{"ref": "refs/heads/main"}'
+  only:
+    - main

@@ -2,12 +2,14 @@
   "name": "link-shortener-expressjs",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch server.ts"
+    "dev": "tsup server.ts --watch --format esm --clean",
+    "build": "tsup server.ts --format esm --clean --minify",
+    "start": "node dist/server.js"
   },
   "dependencies": {
-    "@project/shared": "*",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "@project/shared": "*",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
     "express": "^5.2.1",
@@ -23,7 +25,9 @@
     "@types/node": "^25.3.5",
     "@types/pg": "^8.18.0",
     "@types/supertest": "^7.2.0",
+    "prisma": "^7.5.0",
     "supertest": "^7.2.2",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "vite-tsconfig-paths": "^6.1.1"
   }

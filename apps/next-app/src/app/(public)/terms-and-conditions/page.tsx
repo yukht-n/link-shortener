@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 
+const PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'Link Shortener';
+
 export const metadata: Metadata = {
-  title: 'Link Shortener - AGB',
+  title: `${PROJECT_NAME} - AGB`,
 };
 
 export default function TermsAndConditions() {
