@@ -1,0 +1,79 @@
+# Docker-in-Docker
+image: docker:24.0.5
+services:
+  - docker:24.0.5-dind
+
+stages:
+  - test
+  - build
+  - deploy
+
+# Variables
+variables:
+  DOCKER_DRIVER: overlay2
+  # Namens of deamons GitLab
+  API_IMAGE: $CI_REGISTRY_IMAGE/express-api
+  WEB_IMAGE: $CI_REGISTRY_IMAGE/next-app
+  SPA_IMAGE: $CI_REGISTRY_IMAGE/react-spa
+
+# Vitest
+test_all:
+  stage: test
+  image: node:24-alpine
+  script:
+    - npm install
+    - npm test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+
+# --- BUILD ---
+# Express Build
+build_api:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $API_IMAGE:latest -f apps/express-api/Dockerfile .
+    - docker push $API_IMAGE:latest
+  rules:
+    - changes:
+        - apps/express-api/**/*
+        - packages/shared/**/*
+        - packages/database/**/*
+
+# React Build
+build_react:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --build-arg VITE_API_URL=$VITE_API_URL -t $SPA_IMAGE:latest -f apps/react-spa/Dockerfile .
+    - docker push $SPA_IMAGE:latest
+  rules:
+    - changes:
+        - apps/react-spa/**/*
+        - packages/shared/**/*
+
+# Next-app Build
+build_next:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $WEB_IMAGE:latest -f apps/next-app/Dockerfile .
+    - docker push $WEB_IMAGE:latest
+  rules:
+    - changes:
+        - apps/next-app/**/*
+        - packages/shared/**/*
+
+# --- DEPLOY ---
+deploy_to_vps:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache sshpass openssh-client
+  script:
+    # Containers updating
+    - ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /app && docker compose pull && docker compose up -d"
+  environment: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"

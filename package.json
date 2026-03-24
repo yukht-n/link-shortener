@@ -1,0 +1,25 @@
+{
+  "name": "link-shortener-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:express": "npm run dev -w apps/express-api",
+    "dev:client": "npm run dev -w apps/react-spa",
+    "dev:next": "npm run dev -w apps/next-app",
+    "dev:all": "npm-run-all --parallel dev:express dev:client dev:next",
+    "db:generate": "prisma generate --schema=./packages/database/schema.prisma",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "dotenv": "^17.3.1",
+    "npm-run-all": "^4.1.5",
+    "prisma": "^7.4.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

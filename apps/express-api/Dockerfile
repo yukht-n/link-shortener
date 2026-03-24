@@ -1,0 +1,45 @@
+# --- ЭТАП 1: Сборка (Build) ---
+FROM node:24-alpine AS builder
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем файлы манифестов для установки зависимостей всего воркспейса
+COPY package*.json ./
+COPY packages/shared/package*.json ./packages/shared/
+COPY packages/database/package*.json ./packages/database/
+COPY apps/express-api/package*.json ./apps/express-api/
+
+# Устанавливаем все зависимости (включая dev)
+RUN npm install
+
+# Копируем исходный код необходимых частей
+COPY packages/shared ./packages/shared
+COPY packages/database ./packages/database
+COPY apps/express-api ./apps/express-api
+
+# Генерируем клиент Prisma (критически важно для работы с БД)
+RUN npx prisma generate --schema=packages/database/schema.prisma
+
+# Если у тебя есть этап компиляции TypeScript в JS, запускаем его здесь:
+# RUN npm run build -w apps/express-api
+
+# --- ЭТАП 2: Финальный образ (Runtime) ---
+FROM node:24-alpine AS runner
+
+WORKDIR /app
+
+# Копируем только необходимые файлы из этапа сборки
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/apps/express-api ./apps/express-api
+COPY --from=builder /app/package.json ./package.json
+
+# Устанавливаем переменную окружения для продакшена
+ENV NODE_ENV=production
+
+# Открываем порт (тот, что указан в твоем Express приложении)
+EXPOSE 4200
+
+# Запускаем сервер через npm workspace
+CMD ["npm", "run", "start", "-w", "apps/express-api"]

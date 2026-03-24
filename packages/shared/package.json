@@ -1,0 +1,10 @@
+{
+  "name": "@project/shared",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "type": "module",
+  "dependencies": {
+    "normalize-url": "^9.0.0",
+    "zod": "^4.3.6"
+  }
+}

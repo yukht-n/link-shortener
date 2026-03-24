@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///home/sfeeks/Projects/link-shortener/project/next-app/src/app/legal-notice/page.tsx"],"sourcesContent":["export default function LegalNotice() {\n  return (\n    <div className=\"prose\">\n      <h1>Impressum</h1>\n      <p>Angaben gemäß § 5 TMG:</p>\n      <p>\n        [Твоє Ім'я та Прізвище]\n        <br />\n        [Твоя Вулиця та Номер]\n        <br />\n        [Поштовий індекс та Місто]\n      </p>\n      <h3>Kontakt</h3>\n      <p>\n        E-Mail: yukht.n@gmail.com\n        <br />\n        GitHub: github.com/yukht-n\n      </p>\n      <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>\n      <p>Nikita Yukht</p>\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,wQAAC;QAAI,WAAU;;0BACb,wQAAC;0BAAG;;;;;;0BACJ,wQAAC;0BAAE;;;;;;0BACH,wQAAC;;oBAAE;kCAED,wQAAC;;;;;oBAAK;kCAEN,wQAAC;;;;;oBAAK;;;;;;;0BAGR,wQAAC;0BAAG;;;;;;0BACJ,wQAAC;;oBAAE;kCAED,wQAAC;;;;;oBAAK;;;;;;;0BAGR,wQAAC;0BAAG;;;;;;0BACJ,wQAAC;0BAAE;;;;;;;;;;;;AAGT"}}]
+}

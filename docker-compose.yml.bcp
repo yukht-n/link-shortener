@@ -1,0 +1,52 @@
+services:
+  # DB
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB`=${DB_NAME}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Express API from GitLab
+  express-api:
+    image: ${CI_REGISTRY_IMAGE}/express-api:latest
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?schema=public
+      - PORT=4200
+      - SITE_URL=https://${DOMAIN}
+      - JWT_SECRET=${JWT_SECRET}
+    expose:
+      - '4200'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Next.js App from GitLab
+  next-app:
+    image: ${CI_REGISTRY_IMAGE}/next-app:latest
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL='postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?schema=public'
+    expose:
+      - '3000'
+
+  # React SPA from GitLab
+  react-spa:
+    image: ${CI_REGISTRY_IMAGE}/react-spa:latest
+    restart: always
+    expose:
+      - '80'
+
+volumes:
+  db-data:
