@@ -27,7 +27,8 @@ The project is structured as a **Monorepo** to manage multiple applications and 
 ├── packages/
 │   ├── shared/          # Shared Zod schemas and helper functions
 │   └── database/        # Centralized Prisma schema, client, and DB-functions
-└── logs/                # Express.js Logs by Winston
+├── logs/                # Express.js Logs by Winston
+└── nginx/               # Nginx configuration for deployment
 ```
 
 ---
@@ -105,6 +106,24 @@ We use **Vitest** for unit and integration testing.
 ```bash
 npm test
 ```
+
+---
+
+## 🚢 Deployment
+
+The project is fully containerized and designed to be deployed using Docker Compose and Dokploy.
+
+### Infrastructure Components
+
+- Orchestration: Dokploy (running on VPS).
+
+- Reverse Proxy: Traefik (SSL termination) → Nginx (Internal routing & fallback).
+
+- CI/CD: Automatic deployments via Dokploy hooks.
+
+### Dynamic Nginx Configuration
+
+The project uses Nginx templates (default.conf.template) to inject environment variables at runtime. This allows the same image to handle different domains without hardcoding values.
 
 ---
 

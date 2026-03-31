@@ -10,12 +10,25 @@ variables:
   WEB_IMAGE: next-app
   SPA_IMAGE: react-spa
 
+# rules:
+.code-changes: &code-changes
+  changes:
+    - 'apps/**/*'
+    - 'packages/**/*'
+    - 'nginx/**/*'
+    - 'docker-compose.yml'
+    - 'package.json'
+    - 'package-lock.json'
+
 # Vitest
 test_all:
   stage: test
   tags:
     - vps-deploy
   # image: node:24-alpine
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      <<: *code-changes
   script:
     # Full clearing
     - docker rm -f test_db || true
@@ -46,18 +59,18 @@ test_all:
     - docker rm -f test_db || true
     - docker network rm test_net || true
     - rm -rf .npm-cache
-  rules:
-    #  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main"
 
 # --- STAGE: DEPLOY ---
 trigger_deploy:
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      <<: *code-changes
+      when: always
+    - when: never
   script:
     - |
       curl -X POST "${DOKPLOY_WEBHOOK_URL}" \
       -H "x-gitlab-event: Push Hook" \
       -H "Content-Type: application/json" \
       -d '{"ref": "refs/heads/main"}'
-  only:
-    - main
