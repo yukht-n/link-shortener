@@ -1,7 +1,7 @@
 # Express + React (domain.com)
 server {
     listen 80;
-    server_name ls-monorepo.yukht.dev; 
+    server_name ${DOMAIN}; 
 
     # 1. API (Express)
     location /api/ {
@@ -42,7 +42,7 @@ server {
     #  Next.js App (next.domain.com)
 server {
     listen 80;
-    server_name next.ls-monorepo.yukht.dev;
+    server_name next.${DOMAIN};
     
     location / {
         proxy_pass http://next-app:3000/;
