@@ -73,10 +73,8 @@ services:
       context: .
       dockerfile: apps/next-app/Dockerfile
       args:
-        - SITE_URL=https://next.${DOMAIN}
         - NEXT_PUBLIC_SITE_URL=https://next.${DOMAIN}
         - NEXT_PUBLIC_PROJECT_NAME=${SITE_NAME}
-        - PROJECT_NAME=${SITE_NAME}
         - OWNER_NAME=${OWNER_NAME}
         - OWNER_EMAIL=${OWNER_EMAIL}
     image: next-app:latest
