@@ -127,6 +127,13 @@ The project uses Nginx templates (default.conf.template) to inject environment v
 
 ---
 
+## 🌍 Websites
+
+- **Next version :** [next.ls-monorepo.yukht.dev](https://next.ls-monorepo.yukht.dev/)
+- **React/Express version :** [ls-monorepo.yukht.dev](https://ls-monorepo.yukht.dev/)
+
+---
+
 ## 📜 License
 
 MIT License. Feel free to use this project for your own learning or portfolio.
