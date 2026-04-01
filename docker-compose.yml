@@ -4,7 +4,7 @@ services:
     image: nginx:alpine
     restart: always
     environment:
-      - DOMAIN="${DOMAIN}"
+      - DOMAIN=${DOMAIN}
     expose:
       - '80'
     volumes:
